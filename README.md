@@ -2,6 +2,8 @@
 
 uniqueness-precheck scans a CSV or JSONL batch against your declared unique key *before* the database import, so one duplicate no longer aborts a 100k-row load. It reports duplicate groups with row-number samples, null/empty keys, and near-miss collisions (whitespace, case). Pure stdlib, offline. Confidence: High (≥80%) for all five rules, per the 65-case suite.
 
+<p align="center"><img src="docs/demo.gif" alt="demo" width="720"></p>
+
 ## Problem
 
 The default way to learn your batch has duplicate keys is ` IntegrityError: duplicate key value violates unique constraint` — after the import has already failed, possibly mid-transaction, on row 87,341 of a file nobody wants to open. Nulls in key columns, `"abc "` vs `"abc"`, and `ABC` vs `abc` each fail differently on different databases. A five-second preflight turns a failed import into a fixable work order.
